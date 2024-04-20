@@ -3,7 +3,9 @@ import {TaxStatusOO, Context, Single, Married, Separated} from "./TaxStatusOO.ts
 import {marriedTax, selectTaxStrategy, separatedTax, singleTax} from "./TaxStatusFP.ts";
 
 function App() {
-    const income: number = Number(prompt("Enter your income", "0"));
+    const singleIncome: number = Number(prompt("Enter your income for single status", "0"));
+    const marriedIncome: number = Number(prompt("Enter your income for married status", "0"));
+    const separatedIncome: number = Number(prompt("Enter your income for separated status", "0"));
 
     // Object-oriented code. Complete the code below.
     // Create the classes
@@ -13,36 +15,34 @@ function App() {
 
     // calculate the tax by using the Context class
     const taxStatusSelection: Context = new Context(single);
-    const singleTaxOO: number = taxStatusSelection.calculateTax(income);
+    const singleTaxOO: number = taxStatusSelection.calculateTax(singleIncome);
 
     // Use the setter to change the TaxStatus class to Married and calculate the tax
     taxStatusSelection.taxStatus = married;
-    const marriedTaxOO: number = taxStatusSelection.calculateTax(income)
+    const marriedTaxOO: number = taxStatusSelection.calculateTax(marriedIncome)
 
     // Use the setter to change the TaxStatus class to Separated and calculate the tax
     taxStatusSelection.taxStatus = separated;
-    const separatedTaxOO: number = taxStatusSelection.calculateTax(income);
+    const separatedTaxOO: number = taxStatusSelection.calculateTax(separatedIncome);
 
     // Functional programming code.
     // Calculate the tax using the higher-order function selectTaxStrategy()
-    const singleTaxFP: number = selectTaxStrategy(singleTax, income);
-    const marriedTaxFP: number = selectTaxStrategy(marriedTax, income);
-    const separatedTaxFP: number = selectTaxStrategy(separatedTax, income);
+    const singleTaxFP: number = selectTaxStrategy(singleTax, singleIncome);
+    const marriedTaxFP: number = selectTaxStrategy(marriedTax, marriedIncome);
+    const separatedTaxFP: number = selectTaxStrategy(separatedTax, separatedIncome);
 
     // Fill in the variables for the code below
     return (
         <>
             <h2>Tax Strategy Pattern - Object Oriented</h2>
-            <b>For an income of ${income}, the tax is</b>
-            <br/><b>${singleTaxOO}</b> for a <b>single</b> person
-            <br/><b>${marriedTaxOO}</b> for a <b>married</b> couple
-            <br/><b>${separatedTaxOO}</b> for a <b>married couple filing separately</b>
+            <b>For an income of ${singleIncome}, the tax is ${singleTaxOO} for a single person</b>
+            <br/><b>For an income of ${marriedIncome}, the tax is ${marriedTaxOO} for a married couple</b>
+            <br/><b>For an income of ${separatedIncome}, the tax is ${separatedTaxOO} for a married couple filing separately</b>
 
             <h2>Tax Strategy Pattern - Functional Programming</h2>
-            <b>For an income of ${income}, the tax is</b>
-            <br/><b>${singleTaxFP}</b> for a <b>single</b> person
-            <br/><b>${marriedTaxFP}</b> for a <b>married</b> couple
-            <br/><b>${separatedTaxFP}</b> for a <b>married couple filing separately</b>
+            <b>For an income of ${singleIncome}, the tax is ${singleTaxFP} for a single person</b>
+            <br/><b>For an income of ${marriedIncome}, the tax is ${marriedTaxFP} for a married couple</b>
+            <br/><b>For an income of ${separatedIncome}, the tax is ${separatedTaxFP} for a married couple filing separately</b>
         </>
     );
 }
