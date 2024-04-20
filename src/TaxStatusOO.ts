@@ -2,60 +2,63 @@ export interface TaxStatusOO {
     calculateTax(income: number): number;
 }
 
-export class Single {
+export class Single implements TaxStatusOO {
     public calculateTax(income: number): number {
-        let result = 0;
-
-        if(income >= 0 || income <= 19999){
-            result =+ income * 0.12;
-        }else if(income >= 20000 || income <= 49999){
-            result =+ income * 0.15;
+        if(income >= 0 && income <= 19999){
+            return income * 0.12;
+        }else if(income >= 20000 && income <= 49999){
+            return income * 0.15;
         }else if(income >= 50000){
-            result =+ income * 0.20;
+            return income * 0.20;
         }
-        return result;
-
+        return 0;
     }
 }
 
-// create the class Married
-
-export class Married {
-    public calculateTax(income: number): number{
-
-        let result = 0;
-
-        if(income >= 0 || income <= 49999){
-            result =+ income * 0.12;
-        }else if(income >= 50000 || income <= 99999){
-            result =+ income * 0.15;
+export class Married implements TaxStatusOO {
+    public calculateTax(income: number): number {
+        if(income >= 0 && income <= 49999){
+            return income * 0.12;
+        }else if(income >= 50000 && income <= 99999){
+            return income * 0.15;
         }else if(income >= 100000){
-            result =+ income * 0.20;
+            return income * 0.20;
         }
-        return result;
-
+        return 0;
     }
 }
 
-// create the class Separated
-export class Separated {
-    public calculateTax(income: number): number{
-
-        let result = 0;
-
-        if(income >= 0 || income <= 15999){
-            result =+ income * 0.12;
-        }else if(income >= 16000 || income <= 40000){
-            result =+ income * 0.15;
-        }else if(income >= 40001 || income <= 74999){
-            result =+ income * 0.20;
+export class Separated implements TaxStatusOO {
+    public calculateTax(income: number): number {
+        if(income >= 0 && income <= 15999){
+            return income * 0.12;
+        }else if(income >= 16000 && income <= 40000){
+            return income * 0.15;
+        }else if(income >= 40001 && income <= 74999){
+            return income * 0.20;
         }else if(income >= 75000){
-            result =+ income * 0.25;
+            return income * 0.25;
         }
-        return result;
-
+        return 0;
     }
 }
+
 export class Context {
     private _taxStatus: TaxStatusOO;
+
+    constructor(taxStatus: TaxStatusOO){
+        this._taxStatus = taxStatus;
+    }
+
+    get taxStatus(): TaxStatusOO {
+        return this._taxStatus;
+    }
+
+    set taxStatus(value: TaxStatusOO){
+        this._taxStatus = value;
+    }
+
+    calculateTax(income: number): number {
+        return this._taxStatus.calculateTax(income);
+    }
 }
